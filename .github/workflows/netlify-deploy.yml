@@ -47,9 +47,14 @@ jobs:
       run: npm install
 
     - name: Build
-      run: npm run build
-
-
+      run: |
+        try {
+          npm run build
+        } catch (error) {
+          echo "Build failed with error: $error"
+          exit 1
+        }
+        
     - name: Deploy
       uses: South-Paw/action-netlify-deploy@v1.2.0
       with: 
