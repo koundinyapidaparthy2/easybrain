@@ -41,7 +41,9 @@ jobs:
     - name: Install Dependencies
       run: npm install
 
-    - name: Build and Deploy
+    - name: Build 
+      run: npm run build
+    - name: Deploy
       uses: South-Paw/action-netlify-deploy@v1.2.0
       with: 
         github-token: ${{ secrets.GITHUB_TOKEN }}
