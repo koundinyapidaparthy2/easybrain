@@ -18,7 +18,7 @@
   },
   "scripts": {
     "test": "react-scripts test",
-    "build": "react-scripts build",
+    "build": "react-scripts build --output-path=dist",
     "deploy": "netlify deploy",
     "start": "react-scripts start",
     "eject": "react-scripts eject"
