@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkeasybrainfrontend=self.webpackChunkeasybrainfrontend||[]).push([[569],{9569:(e,n,a)=>{a.r(n),a.d(n,{default:()=>r});a(2791);var s=a(184);const r=()=>(0,s.jsx)("div",{children:"Contact"})}}]);
+//# sourceMappingURL=569.97daab60.chunk.js.map
