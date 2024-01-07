@@ -15,8 +15,9 @@ const Header = () => {
       alignItems={"center"}
       direction={"row"}
       spacing={2}
+      className="headerwrapper"
     >
-      <Grid item xs={6} md={7}>
+      <Grid item xs={6} md={7} className="imageGridItemWrapper">
         <img
           src="./title.png"
           loading="lazy"
