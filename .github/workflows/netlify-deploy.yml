@@ -9,7 +9,7 @@ on:
       [main stagging]
 
 jobs:
-  build:
+  tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,23 +27,3 @@ jobs:
 
     - name: Run tests
       run: npm test
-    
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
-     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-
-    - name: Set Up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-
-    - name: Install Dependencies
-      run: npm install
-
-    - name: Build and Deploy
-      run: |
-        npm run build
