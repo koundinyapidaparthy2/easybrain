@@ -43,9 +43,13 @@ jobs:
 
     - name: Build and Deploy
       run: |
-        npm run build
-        npm install -g netlify-cli
-        netlify deploy --prod
+         npm install -g netlify-cli
+          try {
+            netlify deploy --prod
+          } catch (error) {
+            echo "Error during deployment: $error"
+            exit 1  # Mark the workflow as failed
+          }
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
 
