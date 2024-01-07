@@ -37,12 +37,18 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '16'
+        
+    - name: Debug Node Versions 
+      run: |
+        echo "Node version: $(node --version)"
+        echo "npm version: $(npm --version)"
 
     - name: Install Dependencies
       run: npm install
 
-    - name: Build 
-      run: npm run build --output-path=dist
+    - name: Build
+      run: npm run build
+
 
     - name: Deploy
       uses: South-Paw/action-netlify-deploy@v1.2.0
