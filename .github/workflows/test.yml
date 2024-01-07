@@ -1,4 +1,4 @@
-name: Build Action
+name: Testing Code
 
 on:
   push:
