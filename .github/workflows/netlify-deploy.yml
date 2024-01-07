@@ -42,12 +42,13 @@ jobs:
       run: npm install
 
     - name: Build 
-      run: npm run build
+      run: npm run build --output-path=dist
+
     - name: Deploy
       uses: South-Paw/action-netlify-deploy@v1.2.0
       with: 
         github-token: ${{ secrets.GITHUB_TOKEN }}
         netlify-auth-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         netlify-site-id: ${{ secrets.NETLIFY_SITE_ID }}
-        build-dir: './build'
+        build-dir: 'dist'
         comment-on-commit: true
