@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkeasybrainfrontend=self.webpackChunkeasybrainfrontend||[]).push([[891],{8891:(e,n,s)=>{s.r(n),s.d(n,{default:()=>r});s(2791);var a=s(184);const r=()=>(0,a.jsx)("div",{children:"Login"})}}]);
+//# sourceMappingURL=891.6df8228e.chunk.js.map

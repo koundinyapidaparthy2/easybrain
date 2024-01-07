@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/336.841efd46.chunk.js","mappings":"wKAEA,MAIA,EAJeA,KACNC,EAAAA,EAAAA,KAAA,OAAAC,SAAK,U","sources":["components/Signin/index.js"],"sourcesContent":["import React from \"react\";\r\n\r\nconst SignIn = () => {\r\n  return <div>SignIn</div>;\r\n};\r\n\r\nexport default SignIn;\r\n"],"names":["SignIn","_jsx","children"],"sourceRoot":""}
