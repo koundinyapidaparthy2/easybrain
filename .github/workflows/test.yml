@@ -3,7 +3,7 @@ name: Code Testing
 on:
   push:
     branches:
-      [main stagging]
+      - stagging
 
 jobs:
   test:
