@@ -1,9 +1,15 @@
-.wrapper {
+.headerwrapper {
     height: 100px;
+    box-shadow: 0px 0px 10px #1976d257;
+}
+
+.imageGridItemWrapper {
+    display: flex;
+    align-items: center;
 }
 
 .headerImage{
-    height: 100px;
+    height: 80px;
     width: auto;
     margin-left: 10px;
     cursor: pointer;
