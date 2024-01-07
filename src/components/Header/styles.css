@@ -1,0 +1,10 @@
+.wrapper {
+    height: 100px;
+}
+
+.headerImage{
+    height: 100px;
+    width: auto;
+    margin-left: 10px;
+    cursor: pointer;
+}
