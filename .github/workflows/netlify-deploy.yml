@@ -43,14 +43,6 @@ jobs:
         echo "Node version: $(node --version)"
         echo "npm version: $(npm --version)"
 
-    - name: Install Dependencies
-      run: npm install
-
-    - name: Build
-      env:
-        CI: false
-      run: npm run build
-
     - name: Install Netlify CLI
       run: npm install -g netlify-cli
     - name: Install deps
