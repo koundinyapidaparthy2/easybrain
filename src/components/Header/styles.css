@@ -1,16 +1,35 @@
 .headerwrapper {
-    height: 100px;
-    box-shadow: 0px 0px 10px #1976d257;
+  height: 100px;
+  box-shadow: 0px 0px 10px #1976d257;
+}
+
+.cursorPointer:hover {
+  cursor: pointer !important;
 }
 
 .imageGridItemWrapper {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
-.headerImage{
-    height: 80px;
-    width: auto;
-    margin-left: 10px;
-    cursor: pointer;
+.headerImage {
+  height: 80px;
+  width: auto;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.routePath {
+  cursor: pointer;
+  font-weight: 600 !important;
+}
+
+.header_Mobile_View_Account_Wrapper svg {
+  margin: 0px 0px 0px -10px;
+}
+
+@media screen and (max-width: 600px) {
+  .header_Links {
+    display: none;
+  }
 }

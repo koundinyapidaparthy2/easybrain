@@ -3,8 +3,8 @@ import ROUTEPATHS from "./routerPaths";
 const SignIn = lazy(() => import("components/Signin"));
 const LogIn = lazy(() => import("components/Login"));
 const Home = lazy(() => import("components/Home"));
-const Contact = lazy(() => import("components/Contact"));
-const About = lazy(() => import("components/About"));
+const Courses = lazy(() => import("components/Courses"));
+const Sprinters = lazy(() => import("components/Sprinters"));
 
 export const PublicRoutes = [
   {
@@ -23,11 +23,13 @@ export const PublicRoutes = [
 
 export const PrivateRoutes = [
   {
-    Component: Contact,
-    path: ROUTEPATHS.CONTACT,
+    Component: Courses,
+    path: ROUTEPATHS.Courses,
+    label: "Courses",
   },
   {
-    Component: About,
-    path: ROUTEPATHS.ABOUT,
+    Component: Sprinters,
+    path: ROUTEPATHS.Sprinters,
+    label: "Sprinters",
   },
 ];
