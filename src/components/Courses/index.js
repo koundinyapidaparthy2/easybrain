@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { useSelector, useDispatch } from "react-redux";
 import { TEST_ACTION } from "actions";
-const Contact = () => {
+const Courses = () => {
   const test = useSelector((state) => state.test);
   const dispatch = useDispatch();
   const handleButtonClick = () => {
@@ -23,4 +23,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default Courses;
