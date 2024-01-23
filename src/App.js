@@ -4,7 +4,7 @@ import Routes from "Router";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "theme";
 import { Provider } from "react-redux";
-import store from "store";
+import store from "./store";
 function App() {
   return (
     <Provider store={store}>

@@ -1,0 +1,112 @@
+.cardForLogIn {
+  border-radius: 20px !important;
+}
+
+.customStylesWrapper {
+  height: 88vh;
+}
+
+.CardContainerGridWrapper {
+  padding: 20px;
+  width: 100%;
+}
+
+.dividerGrid {
+  width: 100%;
+  padding-top: 12px !important;
+}
+
+.forgot_Passsword {
+  text-align: end;
+  font-size: 12px;
+  font-weight: 600;
+  color: #3f7ae5;
+  cursor: pointer;
+}
+
+.logIn_HeaderImage {
+  height: 30px;
+  width: 30px;
+  margin-right: 10px;
+}
+
+.buttonContainer {
+  border-radius: 8px;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  /* padding: 10px 20px 10px 10px; */
+  text-transform: none;
+  border: 1.5px solid #1976d257;
+}
+
+.cardForLogIn {
+  box-shadow: 0px 8px 9px -5px #1976d257, 0px 0px 22px 2px #1976d257,
+    0px 6px 28px 5px #1976d257;
+}
+
+.login_Container {
+  margin-top: -2px;
+  font-size: 14px;
+  margin-left: 10px;
+  line-height: 1px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* ! Semi High to High Size Screens */
+
+@media screen and (min-width: 900px) and (max-width: 1280px) {
+  .userLoginImage {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+/* ! Small to Semi High Size Screens */
+
+@media screen and (min-width: 600px) and (max-width: 900px) {
+  .userLoginImage {
+    width: 300px;
+    height: 300px;
+  }
+  .imageContainer .MuiGrid-container {
+    justify-content: flex-start;
+  }
+}
+
+/* ! Low to Smal Size Screens */
+
+@media screen and (max-width: 600px) {
+  .imageContainer {
+    display: none;
+  }
+  .cardForLogIn {
+    box-shadow: 0px 2px 9px -5px #1976d257, 0px 2px 22px 2px #1976d257,
+      0px 2px 28px 5px #1976d257;
+  }
+  .CardContainerGridWrapper {
+    height: 79vh;
+    overflow-y: scroll;
+    margin-left: -1px;
+  }
+  .CardContainerGridWrapper::-webkit-scrollbar {
+    width: 4px;
+  }
+  .CardContainerGridWrapper::-webkit-scrollbar-track {
+    background: white !important;
+    border-radius: 10px;
+  }
+  .CardContainerGridWrapper::-webkit-scrollbar-thumb {
+    background: #1976d257;
+    border-radius: 10px;
+    margin-left: -10px;
+  }
+  .CardContainerGridWrapper::-webkit-scrollbar-thumb:hover {
+    background: #1976d257;
+    margin-left: -10px;
+  }
+}

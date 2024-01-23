@@ -1,0 +1,23 @@
+.textFieldStyles .MuiOutlinedInput-root {
+  border-radius: 8px;
+}
+
+.textFieldStyles .MuiOutlinedInput-root input {
+  height: 40px !important;
+  overflow: hidden;
+  padding: 0;
+  padding-left: 10px;
+  font-size: 14px;
+}
+
+.textFieldStyles .MuiInputLabel-root {
+  transform: translate(14px, 10px) scale(1) !important;
+}
+
+.textFieldStyles .MuiInputLabel-root.MuiFormLabel-filled {
+  transform: translate(14px, -7px) scale(0.75) !important;
+}
+
+.textFieldStyles .MuiInputLabel-root.Mui-focused {
+  transform: translate(14px, -7px) scale(0.75) !important;
+}
