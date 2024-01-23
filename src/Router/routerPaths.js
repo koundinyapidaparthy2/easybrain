@@ -2,8 +2,8 @@ const routePaths = {
   HOME: "/",
   LOGIN: "login",
   SIGNIN: "signin",
-  CONTACT: "contact",
-  ABOUT: "about",
+  Courses: "Courses",
+  Sprinters: "sprinters",
 };
 
 export default routePaths;
