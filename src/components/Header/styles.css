@@ -1,6 +1,11 @@
 .headerwrapper {
   height: 100px;
-  box-shadow: 0px 0px 10px #1976d257;
+  position: relative;
+  overflow: hidden;
+}
+
+.headerwrapper .MuiGrid-item {
+  z-index: 10;
 }
 
 .cursorPointer:hover {
@@ -17,6 +22,8 @@
   width: auto;
   margin-left: 10px;
   cursor: pointer;
+  transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
 }
 
 .routePath {
@@ -26,6 +33,16 @@
 
 .header_Mobile_View_Account_Wrapper svg {
   margin: 0px 0px 0px -10px;
+}
+
+.custom-header-main-image-styles {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  top: 0px;
+  z-index: 3;
 }
 
 @media screen and (max-width: 600px) {

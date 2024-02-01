@@ -7,12 +7,21 @@ import Chip from "@mui/material/Chip";
 import TextField from "components/TextField/index.tsx";
 import Typography from "@mui/material/Typography";
 import "./styles.css";
-import MuiTelInput from "components/MuiTelInput/index.tsx";
 import Link from "@mui/material/Link";
 import { useNavigate } from "react-router-dom";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../../Firebase";
 import FormHelperText from "@mui/material/FormHelperText";
+import { LOG_IN_ACTION } from "../../actions";
+import { useDispatch } from "react-redux";
+import {
+  checkValidPassword,
+  checkValidEmail,
+  ERROR_MESSAGES,
+} from "../../utils";
+import { enqueueSnackbar } from "notistack";
+import HideSnackbar from "../Snackbar/HideSnackbar";
+
 const provider = new GoogleAuthProvider();
 
 // firebase
@@ -21,33 +30,77 @@ const Login = () => {
   const userEmailRef = React.useRef(null);
   const userPasswordRef = React.useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [errorList, setErrorList] = React.useState({});
 
   const handleOnLogin = () => {
     navigate("/signin");
   };
+  const handleLogin = () => {
+    const email = userEmailRef.current.value;
+    const password = userPasswordRef.current.value;
+    let currentErrorList = {};
+    if (!checkValidEmail(email, 4)) {
+      currentErrorList = {
+        ...currentErrorList,
+        email: ERROR_MESSAGES.email,
+      };
+    }
+    if (!checkValidPassword(password, 2)) {
+      enqueueSnackbar(
+        <div className="passwordErrorContainer">
+          <div
+            dangerouslySetInnerHTML={{
+              __html: ERROR_MESSAGES.passwordFormat,
+            }}
+          />
+        </div>,
+        {
+          key: "passwordErrorContainer",
+          variant: "error",
+          persist: true,
+          preventDuplicate: true,
+          action: (key) => <HideSnackbar currentKey={key} />,
+        }
+      );
+      currentErrorList = {
+        ...currentErrorList,
+        password: ERROR_MESSAGES.password,
+      };
+    }
+    if (Object.keys(currentErrorList).length > 0) {
+      setErrorList(currentErrorList);
+    } else {
+      setErrorList(currentErrorList);
+      dispatch({
+        type: LOG_IN_ACTION.PENDING,
+        payload: {
+          email,
+          password,
+          fromFrontEnd: true,
+        },
+      });
+    }
+  };
   const handleSignInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
         const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-        console.log({ user });
+        dispatch({
+          type: LOG_IN_ACTION.PENDING,
+          payload: {
+            email: user.email,
+            googleId: user.uid,
+            fromFrontEnd: true,
+          },
+        });
         window.close();
       })
       .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
         const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-
+        enqueueSnackbar(errorList.googleAuthIssue, {
+          variant: "error",
+        });
         window.close();
       });
   };
@@ -107,23 +160,30 @@ const Login = () => {
                         LogIn
                       </Typography>
                       <Typography variant="subtitle2" mb={2} color="secondary">
-                        Lets beggin your journey...
+                        Welcome back! Let's solve our challenges...
                       </Typography>
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
                         label="Enter email"
-                        name="text"
-                        ref={userEmailRef}
+                        inputRef={userEmailRef}
                         color="secondary"
                         placeholder="Enter email"
+                        required
+                        helperText={errorList.email}
+                        error={!!errorList.email}
                       />
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
                         label="Enter password"
-                        ref={userPasswordRef}
+                        inputRef={userPasswordRef}
                         placeholder="Enter password"
+                        required
+                        name="password"
+                        type="password"
+                        helperText={errorList.password}
+                        error={!!errorList.password}
                       />
                       <FormHelperText
                         className="forgot_Passsword"
@@ -139,7 +199,9 @@ const Login = () => {
                         direction={"row"}
                       >
                         <Grid item>
-                          <Button variant="contained">Log In</Button>
+                          <Button variant="contained" onClick={handleLogin}>
+                            Log In
+                          </Button>
                         </Grid>
                       </Grid>
                     </Grid>
@@ -151,7 +213,7 @@ const Login = () => {
                       >
                         <Grid item>
                           <Typography variant="subtitle2">
-                            Already have an account ?{" "}
+                            Didn't have an account ?{" "}
                           </Typography>
                         </Grid>
                         <Grid item className="login_Container">
@@ -160,7 +222,7 @@ const Login = () => {
                             underline="hover"
                             onClick={handleOnLogin}
                           >
-                            Sign In
+                            Create Account
                           </Link>
                         </Grid>
                       </Grid>
@@ -188,11 +250,11 @@ const Login = () => {
                             <img
                               src="./google.png"
                               loading="lazy"
-                              className="signIn_HeaderImage"
+                              className="logIn_HeaderImage"
                             />
 
                             <Typography variant="subtitle2">
-                              Sign In With Google
+                              Log In With Google
                             </Typography>
                           </Button>
                         </Grid>

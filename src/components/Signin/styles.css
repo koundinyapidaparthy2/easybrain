@@ -35,9 +35,22 @@
   border: 1.5px solid #1976d257;
 }
 
+.passwordErrorContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.passwordErrorContainer div {
+  margin: 2.5px 0px;
+  font-size: 10px;
+}
+
 .cardForSignIn {
   box-shadow: 0px 8px 9px -5px #1976d257, 0px 0px 22px 2px #1976d257,
     0px 6px 28px 5px #1976d257;
+  position: relative;
 }
 
 .login_Container {
