@@ -21,3 +21,6 @@
 .textFieldStyles .MuiInputLabel-root.Mui-focused {
   transform: translate(14px, -7px) scale(0.75) !important;
 }
+.textFieldStyles .MuiFormHelperText-root {
+  font-size: 10px;
+}

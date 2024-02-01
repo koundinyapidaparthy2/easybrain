@@ -10,35 +10,134 @@ import "./styles.css";
 import MuiTelInput from "components/MuiTelInput/index.tsx";
 import Link from "@mui/material/Link";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../../Firebase";
+import {
+  checkValidPassword,
+  checkValidEmail,
+  checkValidString,
+  ERROR_MESSAGES,
+} from "../../utils";
+import { SIGN_IN_ACTION } from "actions";
+import { CircularProgress } from "@mui/material";
+import { enqueueSnackbar } from "notistack";
+import HideSnackbar from "../Snackbar/HideSnackbar";
+
 const provider = new GoogleAuthProvider();
 
 // firebase
 
 const SignIn = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userFirstNameRef = React.useRef(null);
+  const userLastNameRef = React.useRef(null);
   const userEmailRef = React.useRef(null);
   const userPasswordRef = React.useRef(null);
   const userReEnterPasswordRef = React.useRef(null);
   const [phoneNumber, setPhoneNumber] = React.useState();
-  const navigate = useNavigate();
+  const [errorList, setErrorList] = React.useState({});
+  const fetchingUsers = useSelector((state) => state.user.fetching);
+
+  const containErrorList = Object.keys(errorList).length > 0;
+
   const handlePhoneNumber = (value) => {
     setPhoneNumber(value);
   };
   const handleOnLogin = () => {
     navigate("/login");
   };
+  const handleSignIn = () => {
+    const firstName = userFirstNameRef.current.value;
+    const lastName = userLastNameRef.current.value;
+    const email = userEmailRef.current.value;
+    const password = userPasswordRef.current.value;
+    const reEnterPassword = userReEnterPasswordRef.current.value;
+    let currentErrorList = {};
+
+    if (!checkValidString(firstName, 2)) {
+      currentErrorList = {
+        ...currentErrorList,
+        firstName: ERROR_MESSAGES.firstName,
+      };
+    }
+    if (!checkValidEmail(email, 4)) {
+      currentErrorList = {
+        ...currentErrorList,
+        email: ERROR_MESSAGES.email,
+      };
+    }
+    if (!checkValidPassword(password, 2)) {
+      enqueueSnackbar(
+        <div className="passwordErrorContainer">
+          <div
+            dangerouslySetInnerHTML={{
+              __html: ERROR_MESSAGES.passwordFormat,
+            }}
+          />
+        </div>,
+        {
+          key: "passwordErrorContainer",
+          variant: "error",
+          persist: true,
+          preventDuplicate: true,
+          action: (key) => <HideSnackbar currentKey={key} />,
+        }
+      );
+      currentErrorList = {
+        ...currentErrorList,
+        password: ERROR_MESSAGES.password,
+      };
+    }
+    if (
+      !checkValidPassword(reEnterPassword, 2) ||
+      reEnterPassword !== password
+    ) {
+      currentErrorList = {
+        ...currentErrorList,
+        confirmPassword: ERROR_MESSAGES.confirmValidPassword,
+      };
+    }
+    if (Object.keys(currentErrorList).length > 0) {
+      setErrorList(currentErrorList);
+    } else {
+      setErrorList(currentErrorList);
+      dispatch({
+        type: SIGN_IN_ACTION.PENDING,
+        payload: {
+          firstName,
+          lastName,
+          email,
+          password,
+          phone: phoneNumber,
+        },
+      });
+    }
+  };
   const handleSignInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
         const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
         console.log({ user });
+        const [firstName, lastName] = user.displayName.split(" ") || ["", ""];
+        console.log({
+          firstName,
+          lastName,
+          email: user.email,
+          googleId: user.uid,
+          fromFrontEnd: true,
+        });
+        dispatch({
+          type: SIGN_IN_ACTION.PENDING,
+          payload: {
+            firstName,
+            lastName,
+            email: user.email,
+            googleId: user.uid,
+            fromFrontEnd: true,
+          },
+        });
         window.close();
       })
       .catch((error) => {
@@ -98,7 +197,7 @@ const SignIn = () => {
                   <Grid
                     container
                     direction={"row"}
-                    spacing={2}
+                    spacing={containErrorList ? 1 : 2}
                     className="CardContainerGridWrapper"
                   >
                     <Grid item xs={12}>
@@ -124,16 +223,19 @@ const SignIn = () => {
                           <TextField
                             label="Enter firstname"
                             name="text"
-                            ref={userEmailRef}
+                            inputRef={userFirstNameRef}
                             color="secondary"
                             placeholder="Enter firstname"
+                            error={!!errorList.firstName}
+                            helperText={errorList.firstName}
+                            required
                           />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                           <TextField
                             label="Enter lastname"
                             name="text"
-                            ref={userEmailRef}
+                            inputRef={userLastNameRef}
                             color="secondary"
                             placeholder="Enter lastname"
                           />
@@ -144,9 +246,12 @@ const SignIn = () => {
                       <TextField
                         label="Enter email"
                         name="text"
-                        ref={userEmailRef}
+                        inputRef={userEmailRef}
                         color="secondary"
                         placeholder="Enter email"
+                        error={!!errorList.email}
+                        helperText={errorList.email}
+                        required
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -168,15 +273,23 @@ const SignIn = () => {
                         <Grid item xs={12} sm={6}>
                           <TextField
                             label="Enter password"
-                            ref={userPasswordRef}
+                            inputRef={userPasswordRef}
                             placeholder="Enter password"
+                            error={!!errorList.password}
+                            helperText={errorList.password}
+                            required
+                            type="password"
                           />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                           <TextField
                             label="Confirm password"
-                            ref={userReEnterPasswordRef}
+                            inputRef={userReEnterPasswordRef}
                             placeholder="Confirm password"
+                            error={!!errorList.confirmPassword}
+                            helperText={errorList.confirmPassword}
+                            required
+                            type="password"
                           />
                         </Grid>
                       </Grid>
@@ -188,7 +301,9 @@ const SignIn = () => {
                         direction={"row"}
                       >
                         <Grid item>
-                          <Button variant="contained">SignIn</Button>
+                          <Button variant="contained" onClick={handleSignIn}>
+                            {fetchingUsers ? <CircularProgress /> : "SignIn"}
+                          </Button>
                         </Grid>
                       </Grid>
                     </Grid>

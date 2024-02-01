@@ -1,11 +1,8 @@
-// reducers/index.js
 import { combineReducers } from "@reduxjs/toolkit";
-import testReducer from "./testReducer"; // Create a reducer for handling counter state
+import reducers from "./reducerList";
 
-// Combine all reducers into a root reducer
 const rootReducer = combineReducers({
-  test: testReducer,
-  // Add other reducers as needed
+  ...reducers,
 });
 
 export default rootReducer;
