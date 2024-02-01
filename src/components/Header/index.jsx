@@ -28,6 +28,15 @@ const Header = () => {
       spacing={2}
       className="headerwrapper"
     >
+      <img
+        class="custom-header-main-image-styles"
+        src={
+          !isMobileScreen
+            ? "./Wave/Header_Main.svg"
+            : "./Wave/Header_Main_Small_Screen.svg"
+        }
+        loading="lazy"
+      />
       {isMobileScreen ? (
         <Grid item xs={1}>
           <MenuRoundedIcon color="primary" className="cursorPointer" />
@@ -36,7 +45,7 @@ const Header = () => {
 
       <Grid item xs={9} sm={8} className="imageGridItemWrapper">
         <img
-          src="./title.png"
+          src="./title.svg"
           loading="lazy"
           className="headerImage"
           data-testid="headerImage"
